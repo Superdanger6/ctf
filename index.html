@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CTF Challenge - Registration & Login</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <style>
+    body {
+      font-family: 'Courier New', monospace;
+      background: #000;
+      color: #0f0;
+      text-align: center;
+    }
+    .container {
+      width: 30%;
+      margin: 100px auto;
+      background: #111;
+      padding: 20px;
+      border: 2px solid #0f0;
+    }
+    input, select, button {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+    }
+    button {
+      background: #f00;
+      color: white;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="container" id="register-box">
+    <h2>Register</h2>
+    <form id="register-form">
+      <input type="text" id="full-name" placeholder="Full Name" required>
+      <input type="text" id="reg-number" placeholder="BCSe-00-0000-0000" required>
+      <select id="sex">
+        <option value="">Select Gender</option>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+      </select>
+      <input type="email" id="email" placeholder="Email" required>
+      <select id="region">
+        <option value="">Select Region</option>
+      </select>
+      <select id="district">
+        <option value="">Select District</option>
+      </select>
+      <input type="password" id="password" placeholder="Password" required>
+      <input type="password" id="confirm-password" placeholder="Confirm Password" required>
+      <button type="submit">Register</button>
+      <p>Already have an account? <a href="#" id="show-login">Login</a></p>
+    </form>
+  </div>
+
+  <div class="container" id="login-box" style="display: none;">
+    <h2>Login</h2>
+    <form id="login-form">
+      <input type="email" id="login-email" placeholder="Email" required>
+      <input type="password" id="login-password" placeholder="Password" required>
+      <button type="submit">Login</button>
+      <p>Don't have an account? <a href="#" id="show-register">Sign Up</a></p>
+    </form>
+  </div>
+
+  <div class="container" id="main-page" style="display: none;">
+    <h2>Welcome to CTF Challenge we are mollib</h2>
+
+
+<h1>Welcome to Cybersecurity CTF</h1>
+  </header>
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#about-us">About CTF</a>
+    <a href="#challenges">Challenges</a>
+    <a href="#rules">Rules</a>
+    <a href="#faq">FAQs</a>
+    <a href="#contact-us">Contact Us</a>
+  </nav>
+  <main>
+    <!-- Home Section -->
+    <section id="home">
+      <h2>Home</h2>
+      <p>
+        <strong>Test</strong> your hacking skills with our <em>exciting</em>, <u>challenging</u> Capture the Flag competitions!<br>
+        Join now and become a cybersecurity expert!
+      </p>
+      <div class="quick-links">
+        <a href="#challenges">View Challenges</a> |
+        <a href="#contact-us">Contact Us</a>
+      </div>
+    </section><hr>
+    
+    <!-- About CTF Section -->
+    <section id="about-us">
+      <h2>About CTF</h2>
+      <p>Our Capture the Flag (CTF) events are designed for cybersecurity enthusiasts to practice and showcase their skills. Solve puzzles, find vulnerabilities, and learn along the way!</p>
+    </section><hr>
+    
+    <!-- Challenges Section -->
+    <section id="challenges">
+      <h2>Challenges</h2>
+      <p>Explore a variety of challenges:</p>
+      <ul>
+        <li>Web Exploitation</li>
+        <li>Cryptography</li>
+        <li>Reverse Engineering</li>
+        <li>Forensics</li>
+      </ul>
+    </section><hr>
+    
+    <!-- Rules Section -->
+    <section id="rules">
+      <h2>Rules</h2>
+      <p>Ensure a fair and safe competition:</p>
+      <ul>
+        <li>No malicious activities outside the scope of challenges.</li>
+        <li>Respect other participants.</li>
+        <li>Do not share solutions.</li>
+        <li>Have fun and learn!</li>
+      </ul>
+    </section>
+    
+    <!-- FAQ Section -->
+    <section id="faq">
+      <h2>FAQs</h2>
+      <p>Answers to your most frequently asked questions:</p>
+      <dl>
+        <dt>What is a CTF?</dt>
+        <dd>A CTF is a cybersecurity competition where participants solve challenges to capture flags.</dd>
+        <dt>Who can participate?</dt>
+        <dd>Anyone with an interest in cybersecurity, from beginners to experts!</dd>
+        <dt>How do I join?</dt>
+        <dd>Register on our website and start participating in challenges.</dd>
+      </dl>
+    </section>
+    
+    <!-- Contact Us Section -->
+    <section id="contact-us">
+      <h2>Contact Us</h2>
+      <p>
+        Address: 123 Cyber Lane, Cyber City, CyberState, ZIP<br>
+        Phone: <a href="tel:+1234567890">+1 234-567-890</a><br>
+        Email: <a href="mailto:support@cyberctf.com">support@cyberctf.com</a><br>
+        <a href="https://www.google.com/maps" target="_blank">View Location on Map</a>
+      </p>
+    </section>
+    
+    <!-- Images Section -->
+    <section>
+      <h2>Gallery</h2>
+      <div class="images">
+        <img src="challenge1.jpg" alt="Challenge 1">
+        <img src="challenge2.jpg" alt="Challenge 2">
+        <img src="challenge3.jpg" alt="Challenge 3">
+        <a href="#challenges">
+          <img src="challenge4.jpg" alt="Challenge 4">
+        </a>
+      </div>
+    </section>
+  </main>
+  
+  <button id="logout-btn">Logout</button>
+  </div>
+
+  <script>
+    $(document).ready(function() {
+      var users = {};
+      var regions = {
+        "Region 1": ["District A", "District B"],
+        "Region 2": ["District C", "District D"]
+      };
+
+      $.each(regions, function(region, districts) {
+        $("#region").append(`<option value="${region}">${region}</option>`);
+      });
+
+      $("#region").change(function() {
+        var selectedRegion = $(this).val();
+        $("#district").html("<option value=''>Select District</option>");
+        $.each(regions[selectedRegion], function(index, district) {
+          $("#district").append(`<option value="${district}">${district}</option>`);
+        });
+      });
+
+      $("#register-form").submit(function(e) {
+        e.preventDefault();
+        var fullName = $("#full-name").val();
+        var regNumber = $("#reg-number").val();
+        var email = $("#email").val();
+        var password = $("#password").val();
+        var confirmPassword = $("#confirm-password").val();
+        var regEx = /^BCS-\d{2}-\d{4}-\d{4}$/;
+
+        if (!/^[A-Za-z ]+$/.test(fullName)) {
+          alert("Invalid Full Name. Use letters only.");
+          return;
+        }
+        if (!regEx.test(regNumber)) {
+          alert("Invalid Registration Number Format! Use BCSe-00-0000-0000");
+          return;
+        }
+        if (!/.+@.+\..+/.test(email)) {
+          alert("Invalid Email Format!");
+          return;
+        }
+        if (password.length < 8 || !/[!@#$%^&*]/.test(password)) {
+          alert("Password must be at least 8 characters and contain a special character!");
+          return;
+        }
+        if (password !== confirmPassword) {
+          alert("Passwords do not match!");
+          return;
+        }
+        users[email] = password;
+        alert("Registration Successful! You can now login.");
+        $("#register-box").hide();
+        $("#login-box").show();
+      });
+
+      $("#login-form").submit(function(e) {
+        e.preventDefault();
+        var email = $("#login-email").val();
+        var password = $("#login-password").val();
+
+        if (users[email] && users[email] === password) {
+          alert("Login Successful!");
+          $("#login-box").hide();
+          $("#main-page").show();
+        } else {
+          alert("Invalid Credentials!");
+        }
+      });
+
+      $("#logout-btn").click(function() {
+        $("#main-page").hide();
+        $("#login-box").show();
+      });
+
+      $("#show-login").click(function() {
+        $("#register-box").hide();
+        $("#login-box").show();
+      });
+
+      $("#show-register").click(function() {
+        $("#login-box").hide();
+        $("#register-box").show();
+      });
+    });
+  </script>
+</body>
+</html>
